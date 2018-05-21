@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bluetooth Chat</string>
-
-    <!--  BluetoothChat -->
+    <string name="hello">Hello World, NMapViewer!</string>
+    <string name="app_name">NMapViewer</string>
+    <string name="str_done">완료</string>
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
