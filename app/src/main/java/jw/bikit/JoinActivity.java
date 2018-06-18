@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
+import java.security.MessageDigest;
 
 public class JoinActivity extends Activity {
     private Button join, overlap;
@@ -45,7 +46,6 @@ public class JoinActivity extends Activity {
             public void onClick(View view) {
                 id = e_id.getText().toString();
                 requestinfo();
-
                 try {
                     JSONArray list = mResult.getJSONArray("list");
                     for (int i = 0; i < list.length(); i++) {
@@ -63,7 +63,7 @@ public class JoinActivity extends Activity {
                     }
                 } catch (JSONException | NullPointerException e) {
                     e.printStackTrace();
-                    Toast.makeText(JoinActivity.this, "Error"+e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "Error"+"여기??", Toast.LENGTH_SHORT).show();
                     mResult = null;
                 }
             }
@@ -77,13 +77,14 @@ public class JoinActivity extends Activity {
                 }
                 if(flag==1) {
                     try {
-                        PHPRequest request = new PHPRequest("http://202.31.201.139/join.php");
+                        PHPRequest request = new PHPRequest("http://14.49.39.100/join.php");
                         id = e_id.getText().toString();
                         password1 = e_password1.getText().toString();
                         password2 = e_password2.getText().toString();
-                        String result = request.PhPtest(id, password1);
 
                         if (password1.equals(password2)) {
+                            LockPassword();
+                            String result = request.PhPtest(id, password1);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class); //메인화면으로 이동
                             startActivity(intent);
                             Toast.makeText(getApplication(), "회원가입 완료", Toast.LENGTH_SHORT).show();
@@ -94,16 +95,14 @@ public class JoinActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-                else {
-                    Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
     }
 
+
     protected void requestinfo() {
-        String url = "http://202.31.201.139/user.php";
+        String url = "http://14.49.39.100/user.php";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -120,4 +119,25 @@ public class JoinActivity extends Activity {
         );
         mQueue.add(request);
     }
+
+    public void LockPassword() {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password1.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1)
+                    hexString.append('0');
+                hexString.append(hex);
+            }
+            password1=hexString.toString();
+            //Toast.makeText(JoinActivity.this, hexString.toString(), Toast.LENGTH_SHORT).show();
+            //System.out.println(hexString.toString());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
 }

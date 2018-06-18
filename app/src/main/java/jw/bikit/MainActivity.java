@@ -3,6 +3,7 @@ package jw.bikit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     protected JSONObject mResult = null;
     protected RequestQueue mQueue = null;
 
@@ -47,7 +48,9 @@ public class MainActivity extends Activity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getApplicationContext(),JoinActivity.class);
+                startProgress();
+
+                Intent intent =new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -60,8 +63,22 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+    private void startProgress() {
+
+        progressON("Loading...");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressOFF();
+            }
+        }, 3500);
+
+    }
+
     protected void requestinfo() {
-        String url = "http://192.168.43.168/user.php";
+        String url = "http://14.49.39.100/user.php";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

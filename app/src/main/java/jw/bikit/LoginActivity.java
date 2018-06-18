@@ -19,6 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.MessageDigest;
+
 public class LoginActivity extends Activity {
     private Button login;
     private EditText e_id, e_password;
@@ -49,8 +56,15 @@ public class LoginActivity extends Activity {
     }
 
     protected void info() {
+        LockPassword();
         try {
             JSONArray list = mResult.getJSONArray("list");
+
+            if(list.length()==0)
+            {
+                Toast.makeText(LoginActivity.this, "ID나 Password 일치하지 않음" , Toast.LENGTH_SHORT).show();
+                return;
+            }
             for (int i = 0; i < list.length(); i++) {
                 JSONObject node = list.getJSONObject(i);
 
@@ -60,15 +74,20 @@ public class LoginActivity extends Activity {
                     continue;
                 }
                 else {
-                    //Toast.makeText(LoginActivity.this, d_email , Toast.LENGTH_SHORT).show();
-                    String d_password = node.getString("password");
-                    if(password.equals(d_password)) {
+                    String d_password=node.getString("password");
+                    if( d_password.equals(password))
+                    {
                         Intent intent =new Intent(getApplicationContext(),NMapViewer.class);
                         startActivity(intent);
                         Toast.makeText(LoginActivity.this, "로그인 성공" , Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(LoginActivity.this, "ID나 Password 일치하지 않음" , Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Password 일치하지 않음", Toast.LENGTH_SHORT).show();
                     }
+                    i= list.length()+1;
+
+                }
+                if(i== list.length() - 1) {
+                    Toast.makeText(LoginActivity.this, "존재하지 않는 ID입니다." , Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (JSONException | NullPointerException e) {
@@ -80,13 +99,33 @@ public class LoginActivity extends Activity {
         }
     }
 
+    public void LockPassword() {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1)
+                    hexString.append('0');
+                hexString.append(hex);
+            }
+            password=hexString.toString();
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+
     protected void requestinfo() {
-        String url = "http://192.168.43.168/user.php";
+        String url = "http://14.49.39.100/user.php";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(LoginActivity.this, "디비 연결 성공", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "디비 연결 성공", Toast.LENGTH_SHORT).show();
                         mResult = response;
                         info();
                     }
@@ -94,7 +133,7 @@ public class LoginActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
         );

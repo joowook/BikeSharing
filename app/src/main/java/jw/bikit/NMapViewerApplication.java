@@ -19,7 +19,7 @@ import android.app.Application;
 /**
  * @author SeJin Lee 
  */
-public class NMapViewerApplication extends Application {
+public class NMapViewerApplication extends BaseApplication {
 
 	private static NMapViewerApplication instance;
 
