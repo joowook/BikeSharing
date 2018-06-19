@@ -20,8 +20,8 @@
     <application
         android:icon="@drawable/icon_image"
         android:label="@string/app_name"
-        android:name="jw.bikit.BaseApplication"
-        android:theme="@style/AppTheme">
+        android:name="jw.bikit.NMapViewerApplication"
+        android:theme="@style/App.Theme">
 
         <!-- 스플래시 액티비티 -->
         <activity
@@ -35,10 +35,16 @@
         </activity>
 
         <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme"
+
             android:configChanges="keyboardHidden|orientation">
         </activity>
 
         <activity android:name=".NMapViewer"
+            >
+        </activity>
+
+        <activity android:name=".BaseActivity"
             >
         </activity>
 

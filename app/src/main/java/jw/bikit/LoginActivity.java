@@ -47,8 +47,6 @@ public class LoginActivity extends Activity {
                 id = e_id.getText().toString();
                 password = e_password.getText().toString();
                 requestinfo();
-//                Intent intent =new Intent(getApplicationContext(),NMapViewer.class);
-//                startActivity(intent);
             }
         });
 
@@ -60,17 +58,32 @@ public class LoginActivity extends Activity {
         try {
             JSONArray list = mResult.getJSONArray("list");
 
-            if(list.length()==0)
-            {
-                Toast.makeText(LoginActivity.this, "ID나 Password 일치하지 않음" , Toast.LENGTH_SHORT).show();
+//            if(list.length()==0)
+//            {
+//                Toast.makeText(LoginActivity.this, "ID나 Password 일치하지 않음" , Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            else {
+//                Toast.makeText(LoginActivity.this, "길이 ="+ list.length() , Toast.LENGTH_SHORT).show();
+//            }
+            if(id.equals("")) {
+                Toast.makeText(LoginActivity.this, "아이디를 입력해 주세요." , Toast.LENGTH_SHORT).show();
                 return;
             }
+            else if(password.equals("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")) {
+                Toast.makeText(LoginActivity.this, "비밀번호를 입력해 주세요." , Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             for (int i = 0; i < list.length(); i++) {
                 JSONObject node = list.getJSONObject(i);
 
                 String d_email = node.getString("email");
 
                 if(!d_email.equals(id)) {
+                    if(i == list.length()-1) {
+                        Toast.makeText(LoginActivity.this, "존재하지 않는 아이디 입니다." , Toast.LENGTH_SHORT).show();
+                    }
                     continue;
                 }
                 else {
@@ -80,14 +93,11 @@ public class LoginActivity extends Activity {
                         Intent intent =new Intent(getApplicationContext(),NMapViewer.class);
                         startActivity(intent);
                         Toast.makeText(LoginActivity.this, "로그인 성공" , Toast.LENGTH_SHORT).show();
+                        break;
                     }else {
-                        Toast.makeText(LoginActivity.this, "Password 일치하지 않음", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                        break;
                     }
-                    i= list.length()+1;
-
-                }
-                if(i== list.length() - 1) {
-                    Toast.makeText(LoginActivity.this, "존재하지 않는 ID입니다." , Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (JSONException | NullPointerException e) {

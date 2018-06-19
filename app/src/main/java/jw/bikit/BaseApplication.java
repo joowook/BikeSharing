@@ -23,7 +23,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
-    } public void progressON(Activity activity, String message) {
+    }
+
+    public void progressON(Activity activity, String message) {
 
         if (activity == null || activity.isFinishing()) {
             return;

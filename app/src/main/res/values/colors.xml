@@ -4,7 +4,7 @@
     <color name="black_color">#3F51B5</color>
     <color name="selected_list_color">#ff32A800</color>
     <color name="default_list_color">#ffffffff</color>
-
+    <color name="red">#F00</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

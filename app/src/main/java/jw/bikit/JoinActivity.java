@@ -28,7 +28,7 @@ public class JoinActivity extends Activity {
     private String id, password1, password2;
     protected JSONObject mResult = null;
     protected RequestQueue mQueue = null;
-    int flag=0;
+    boolean flag=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,41 +41,16 @@ public class JoinActivity extends Activity {
         e_password1=(EditText)findViewById(R.id.password1);
         e_password2=(EditText)findViewById(R.id.password2);
 
-        overlap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                id = e_id.getText().toString();
-                requestinfo();
-                try {
-                    JSONArray list = mResult.getJSONArray("list");
-                    for (int i = 0; i < list.length(); i++) {
-                        JSONObject node = list.getJSONObject(i);
-                        String d_email = node.getString("email");
-                        if(d_email.equals(id)) {
-                            flag = 0;
-                            Toast.makeText(getApplication(), "중복된 아이디가 존재", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if(i== list.length() - 1) {
-                            Toast.makeText(getApplication(), "아이디 사용 가능", Toast.LENGTH_SHORT).show();
-                            flag = 1;
-                        }
-                    }
-                } catch (JSONException | NullPointerException e) {
-                    e.printStackTrace();
-                    Toast.makeText(JoinActivity.this, "Error"+"여기??", Toast.LENGTH_SHORT).show();
-                    mResult = null;
-                }
-            }
-        });
+        requestinfo();
 
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag==0){
+
+                if(!flag){
                     Toast.makeText(getApplication(), "ID 중복 확인 필요", Toast.LENGTH_SHORT).show();
                 }
-                if(flag==1) {
+                else {
                     try {
                         PHPRequest request = new PHPRequest("http://14.49.39.100/join.php");
                         id = e_id.getText().toString();
@@ -94,6 +69,34 @@ public class JoinActivity extends Activity {
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+        });
+
+        overlap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id = e_id.getText().toString();
+
+                try {
+                    JSONArray list = mResult.getJSONArray("list");
+                    for (int i = 0; i < list.length(); i++) {
+                        JSONObject node = list.getJSONObject(i);
+                        String d_email = node.getString("email");
+                        if(d_email.equals(id)) {
+                            flag = false;
+                            Toast.makeText(getApplication(), "중복된 아이디가 존재", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if(i== list.length() - 1) {
+                            Toast.makeText(getApplication(), "아이디 사용 가능", Toast.LENGTH_SHORT).show();
+                            flag = true;
+                        }
+                    }
+                } catch (JSONException | NullPointerException e) {
+                    e.printStackTrace();
+                    Toast.makeText(JoinActivity.this, "Error"+"여기??", Toast.LENGTH_SHORT).show();
+                    mResult = null;
                 }
             }
         });

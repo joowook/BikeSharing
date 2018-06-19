@@ -68,8 +68,8 @@ public class NMapViewer extends NMapActivity {
 	private static final boolean DEBUG = false;
 
 	// set your Client ID which is registered for NMapViewer library.
-	private static final String CLIENT_ID = "un0VCGU5K40VPI7anqzF";
-	private static final String CLIENT_SECRET = "VgKm1tDse6";
+	private static final String CLIENT_ID = "yDkWqgDk7DuVYRIpqKyg";
+	private static final String CLIENT_SECRET = "4ZIImZPQLC";
 
 	private MapContainerView mMapContainerView;
 
