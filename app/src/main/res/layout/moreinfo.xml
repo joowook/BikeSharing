@@ -25,11 +25,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"/>
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnshare"
-        android:layout_gravity="center"
-        android:text="대여"/>
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnshare"
+            android:layout_gravity="center"
+            android:text="대여"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/on"
+            android:layout_gravity="center"
+            android:text="잠금해제"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/off"
+            android:layout_gravity="center"
+            android:text="잠금"/>
+    </LinearLayout>
+
 
 </LinearLayout>

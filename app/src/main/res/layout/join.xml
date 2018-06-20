@@ -9,6 +9,7 @@
     android:scaleType="fitStart"
     tools:context="jw.bikit.MainActivity">
 
+
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
@@ -57,10 +58,11 @@
                     android:text="비밀번호"/>
 
                 <EditText
+                    android:password="true"
                     android:id="@+id/password1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="영문자/숫자/특수문자(!@#$%^*_-) 혼용 8자이상 16자 이하"/>
+                    android:hint="8자이상 16자 이하"/>
             </LinearLayout>
 
             <LinearLayout
@@ -73,10 +75,11 @@
                     android:text="비밀번호 확인"/>
 
                 <EditText
+                    android:password="true"
                     android:id="@+id/password2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="영문자/숫자/특수문자(!@#$%^*_-) 혼용 8자이상 16자 이하"/>
+                    android:hint="8자이상 16자 이하"/>
             </LinearLayout>
 
         </LinearLayout>

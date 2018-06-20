@@ -126,7 +126,7 @@ public class NMapViewer extends NMapActivity {
 		mMapController = mMapView.getMapController();
 
 		NMapView.LayoutParams lp = new NMapView.LayoutParams(LayoutParams.WRAP_CONTENT,
-			LayoutParams.WRAP_CONTENT, NMapView.LayoutParams.BOTTOM_RIGHT);
+				LayoutParams.WRAP_CONTENT, NMapView.LayoutParams.BOTTOM_RIGHT);
 		mMapView.setBuiltInZoomControls(true, lp);
 
 		mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
@@ -144,18 +144,18 @@ public class NMapViewer extends NMapActivity {
 		// create my location overlay
 		mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(mMapLocationManager, mMapCompassManager);
 
-			mOverlayManager.clearOverlays();
-			int markerId = NMapPOIflagType.PIN;
-			NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
-			poiData.beginPOIdata(1);
-			NMapPOIitem POIitem = poiData.addPOIitem(
-					128.395956, 36.139503, "학교",markerId,0);
-			POIitem.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-			poiData.endPOIdata();
+		mOverlayManager.clearOverlays();
+		int markerId = NMapPOIflagType.PIN;
+		NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+		poiData.beginPOIdata(1);
+		NMapPOIitem POIitem = poiData.addPOIitem(
+				128.395956, 36.139503, "학교",markerId,0);
+		POIitem.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		poiData.endPOIdata();
 
-			NMapPOIdataOverlay poIdataOverlay =
-					mOverlayManager.createPOIdataOverlay(poiData, null);
-			poIdataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+		NMapPOIdataOverlay poIdataOverlay =
+				mOverlayManager.createPOIdataOverlay(poiData, null);
+		poIdataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class NMapViewer extends NMapActivity {
 				boolean isMyLocationEnabled = mMapLocationManager.enableMyLocation(true);
 				if (!isMyLocationEnabled) {
 					Toast.makeText(NMapViewer.this, "Please enable a My Location source in system settings",
-						Toast.LENGTH_LONG).show();
+							Toast.LENGTH_LONG).show();
 
 					Intent goToSettings = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 					startActivity(goToSettings);
@@ -260,24 +260,24 @@ public class NMapViewer extends NMapActivity {
 	}
 
 	private void testActionPOI(){
-        mOverlayManager.clearOverlays();
-        int markerId = NMapPOIflagType.PIN;
-        NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
-        poiData.beginPOIdata(1);
-        NMapPOIitem POIitem = poiData.addPOIitem(
-        		128.395956, 36.139503, "학교",markerId,0);
-        POIitem.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
-        poiData.endPOIdata();
+		mOverlayManager.clearOverlays();
+		int markerId = NMapPOIflagType.PIN;
+		NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+		poiData.beginPOIdata(1);
+		NMapPOIitem POIitem = poiData.addPOIitem(
+				128.395956, 36.139503, "학교",markerId,0);
+		POIitem.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+		poiData.endPOIdata();
 
-        NMapPOIdataOverlay poIdataOverlay =
+		NMapPOIdataOverlay poIdataOverlay =
 				mOverlayManager.createPOIdataOverlay(poiData, null);
-        poIdataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
+		poIdataOverlay.setOnStateChangeListener(onPOIdataStateChangeListener);
 		Log.i(LOG_TAG, "여기");
-        poIdataOverlay.selectPOIitem(0, true);
+		poIdataOverlay.selectPOIitem(0, true);
 
-    }
+	}
 
-    private void testSearch(){
+	private void testSearch(){
 		try {
 			String addr = URLEncoder.encode("학산로 30", "UTF-8");
 			String apiURL = "https://openapi.naver.com/v1/map/geocode?query=" + addr + "&Query"; //json
@@ -307,9 +307,9 @@ public class NMapViewer extends NMapActivity {
 			JSONObject jsonObject = new JSONObject(response.toString());
 			JSONObject a = new JSONObject(jsonObject.getString("result"));
 			JSONArray b = new JSONArray(a.getString("items"));
-            a = b.getJSONObject(0);
-            jsonObject = new JSONObject(a.getString("point"));
-            double x = Double.valueOf(jsonObject.getString("x")).doubleValue();
+			a = b.getJSONObject(0);
+			jsonObject = new JSONObject(a.getString("point"));
+			double x = Double.valueOf(jsonObject.getString("x")).doubleValue();
 			double y = Double.valueOf(jsonObject.getString("y")).doubleValue();
 			Log.e(LOG_TAG, jsonObject.toString());
 			NGeoPoint center = new NGeoPoint(x,y);
@@ -329,7 +329,7 @@ public class NMapViewer extends NMapActivity {
 		public void onReverseGeocoderResponse(NMapPlacemark placeMark, NMapError errInfo) {
 			if (DEBUG) {
 				Log.i(LOG_TAG, "onReverseGeocoderResponse: placeMark="
-					+ ((placeMark != null) ? placeMark.toString() : null));
+						+ ((placeMark != null) ? placeMark.toString() : null));
 			}
 			if (errInfo != null) {
 				Log.e(LOG_TAG, "Failed to findPlacemarkAtLocation: error=" + errInfo.toString());
@@ -493,8 +493,8 @@ public class NMapViewer extends NMapActivity {
 
 		@Override
 		public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
-            Intent i = new Intent(NMapViewer.this, SelectBike.class);
-            startActivity(i);
+			Intent i = new Intent(NMapViewer.this, SelectBike.class);
+			startActivity(i);
 			if (DEBUG) {
 				if (item != null) {
 					Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
@@ -508,25 +508,25 @@ public class NMapViewer extends NMapActivity {
 	private final NMapPOIdataOverlay.OnFloatingItemChangeListener onPOIdataFloatingItemChangeListener =
 			new NMapPOIdataOverlay.OnFloatingItemChangeListener() {
 
-		@Override
-		public void onPointChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
-			NGeoPoint point = item.getPoint();
-			if (DEBUG) {
-				Log.i(LOG_TAG, "onPointChanged: point=" + point.toString());
-			}
+				@Override
+				public void onPointChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
+					NGeoPoint point = item.getPoint();
+					if (DEBUG) {
+						Log.i(LOG_TAG, "onPointChanged: point=" + point.toString());
+					}
 
-			findPlacemarkAtLocation(point.longitude, point.latitude);
+					findPlacemarkAtLocation(point.longitude, point.latitude);
 
-			item.setTitle(null);
+					item.setTitle(null);
 
-		}
-	};
+				}
+			};
 
 	private final NMapOverlayManager.OnCalloutOverlayListener onCalloutOverlayListener = new NMapOverlayManager.OnCalloutOverlayListener() {
 
 		@Override
 		public NMapCalloutOverlay onCreateCalloutOverlay(NMapOverlay itemOverlay, NMapOverlayItem overlayItem,
-			Rect itemBounds) {
+														 Rect itemBounds) {
 
 			// handle overlapped items
 			if (itemOverlay instanceof NMapPOIdataOverlay) {
@@ -565,7 +565,7 @@ public class NMapViewer extends NMapActivity {
 
 				if (poiItem.showRightButton()) {
 					return new NMapCalloutCustomOldOverlay(itemOverlay, overlayItem, itemBounds,
-						mMapViewerResourceProvider);
+							mMapViewerResourceProvider);
 				}
 			}
 
@@ -666,7 +666,7 @@ public class NMapViewer extends NMapActivity {
 				return true;
 
 			case R.id.action_poi_data:
-			    testActionPOI();
+				testActionPOI();
 				// add POI data overlay
 				return true;
 

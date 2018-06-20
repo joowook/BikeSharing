@@ -3,6 +3,7 @@ package jw.bikit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.security.MessageDigest;
 
-public class JoinActivity extends Activity {
+public class JoinActivity extends BaseActivity {
     private Button join, overlap;
     private EditText e_id, e_password1, e_password2;
     private String id, password1, password2;
@@ -58,10 +59,16 @@ public class JoinActivity extends Activity {
                         password2 = e_password2.getText().toString();
 
                         if (password1.equals(password2)) {
+                            if(password1.length() <8 || password1.length() >16) {
+                                Toast.makeText(getApplication(), "8자 이상 16자 이하로 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             LockPassword();
                             String result = request.PhPtest(id, password1);
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class); //메인화면으로 이동
+
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //메인화면으로 이동
                             startActivity(intent);
+                            flag=false;
                             Toast.makeText(getApplication(), "회원가입 완료", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplication(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -73,10 +80,27 @@ public class JoinActivity extends Activity {
             }
         });
 
+
         overlap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 id = e_id.getText().toString();
+
+                if(id.equals("")) {
+                    Toast.makeText(JoinActivity.this, "아이디를 입력해 주세요." , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    for(int i=0; i<id.length(); i++) {
+                        if(id.charAt(i) == '@') {
+                            break;
+                        }
+                        else if(i == id.length()-1) {
+                            Toast.makeText(JoinActivity.this, "이메일 형식으로 입력해 주세요." , Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                }
 
                 try {
                     JSONArray list = mResult.getJSONArray("list");
@@ -103,6 +127,17 @@ public class JoinActivity extends Activity {
 
     }
 
+//    private void startProgress() {
+//
+//        progressON("Loading...");
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressOFF();
+//            }
+//        }, 2000);
+//    }
 
     protected void requestinfo() {
         String url = "http://14.49.39.100/user.php";

@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startProgress();
+//                startProgress();
 
                 Intent intent =new Intent(getApplicationContext(),JoinActivity.class);
                 startActivity(intent);
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startProgress();
+//                startProgress();
 
                 Intent intent =new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
@@ -71,17 +71,17 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void startProgress() {
-
-        progressON("Loading...");
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressOFF();
-            }
-        }, 2000);
-    }
+//    private void startProgress() {
+//
+//        progressON("Loading...");
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressOFF();
+//            }
+//        }, 2000);
+//    }
 
     protected void requestinfo() {
         String url = "http://14.49.39.100/user.php";

@@ -50,6 +50,9 @@ public class MoreInfo extends Activity {
         skillT.setText("파워 : " + skill);
 
         Button btn_Connect = (Button) findViewById(R.id.btnshare);
+        Button on = (Button) findViewById(R.id.on);
+        Button off = (Button) findViewById(R.id.off);
+
         btn_Connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +60,22 @@ public class MoreInfo extends Activity {
                     btService.enableBluetooth();
                 else
                     finish();
+            }
+        });
+        on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byte buffer1[] = new byte[2];
+                buffer1[0] = 'Q';
+                btService.write(buffer1);
+            }
+        });
+        off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                byte buffer1[] = new byte[2];
+                buffer1[0] = 'U';
+                btService.write(buffer1);
             }
         });
 

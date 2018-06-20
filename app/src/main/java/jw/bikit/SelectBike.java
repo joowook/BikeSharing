@@ -28,9 +28,8 @@ public class SelectBike extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
 
-        mArray.add(new character("오토바이 1", "100CC", 10, 20, 1));
-        mArray.add(new character("오토바이 2", "50CC", 20, 10, 1));
-        mArray.add(new character("오토바이 3", "50CC", 15, 15, 1));
+        mArray.add(new character("스쿠터", "100CC", 10, 20, 1));
+
         mAdapter = new characterAdapter(this, R.layout.myitem);
         mList = (ListView)findViewById(R.id.list);
         mList.setAdapter(mAdapter);

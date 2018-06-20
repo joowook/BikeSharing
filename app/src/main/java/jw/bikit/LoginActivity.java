@@ -3,6 +3,7 @@ package jw.bikit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +27,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     private Button login;
+    private Button join;
     private EditText e_id, e_password;
     private String id, password;
     protected JSONObject mResult = null;
@@ -38,6 +40,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
         mQueue = Volley.newRequestQueue(this);
         login = (Button)findViewById(R.id.login);
+        join = (Button)findViewById(R.id.join);
         e_id = (EditText)findViewById(R.id.id);
         e_password=(EditText)findViewById(R.id.password);
 
@@ -50,9 +53,28 @@ public class LoginActivity extends Activity {
             }
         });
 
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                startProgress();
+                Intent intent =new Intent(getApplicationContext(),JoinActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
+//    private void startProgress() {
+//
+//        progressON("Loading...");
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressOFF();
+//            }
+//        }, 2000);
+//    }
     protected void info() {
         LockPassword();
         try {
@@ -104,7 +126,7 @@ public class LoginActivity extends Activity {
             e.printStackTrace();
             Toast.makeText(this, "Error: " + e.toString(),
                     Toast.LENGTH_LONG).show();
-            Toast.makeText(LoginActivity.this, "여긴가", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
             mResult = null;
         }
     }

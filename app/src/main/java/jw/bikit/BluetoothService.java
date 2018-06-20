@@ -3,18 +3,21 @@ package jw.bikit;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-public class BluetoothService extends AppCompatActivity {
+public class BluetoothService extends Activity {
 
     byte[] RcvBuffer = new byte[1024];
     int pRcvBuffer;
@@ -127,7 +130,7 @@ public class BluetoothService extends AppCompatActivity {
         ConnectedThread r;
         synchronized (this){
             if(mState != STATE_CONNECTED) {
-               // Toast.makeText(mActivity, "write failed", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(mActivity, "write failed", Toast.LENGTH_SHORT).show();
                 return;
             }
             r = mConnectedThread;
@@ -144,7 +147,7 @@ public class BluetoothService extends AppCompatActivity {
     }
 
 
-    private class ConnectThread extends Thread {
+    private class ConnectThread extends Thread{
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
 
@@ -196,7 +199,7 @@ public class BluetoothService extends AppCompatActivity {
         }
     }
 
-    private class ConnectedThread extends Thread {
+    private class ConnectedThread extends Thread{
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
